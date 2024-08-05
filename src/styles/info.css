@@ -1,0 +1,216 @@
+@font-face {
+  font-family: 'scribble-scrawl';
+  src: local('scribble-scrawl'), url(./Fonts/scribble-scrawl.woff) format('truetype');
+}
+
+@font-face {
+  font-family: 'Montserrat';
+  src: local('Montserrat'), url(./Fonts/Montserrat/Montserrat-Regular.woff) format('truetype');
+}
+
+
+
+/* ********************************************************************************************* */
+/* About Us designs */
+
+#Creativo {
+  text-align: center;
+  color: #FED500;
+  font-family: scribble-scrawl, sans-serif !important;
+}
+
+#Explrador {
+  text-align: center;
+  color: #72b84a;
+  font-family: scribble-scrawl, sans-serif !important;
+}
+
+#Cientifico {
+  text-align: center;
+  font-family: scribble-scrawl, sans-serif !important;
+}
+
+#Depoortista {
+  text-align: center;
+  color: #f07e19;
+  font-family: scribble-scrawl, sans-serif !important;
+}
+
+.img-aligner {
+  vertical-align: middle;
+  display: inline-block;
+  padding-left: 30%;
+  padding-right: 30%;
+}
+
+.aboutus-container-top {
+  text-align: center;
+}
+
+.aboutus-container-top h1 {
+  font-family: Montserrat;
+  font-size: 30px;
+  font-weight: 500;
+  letter-spacing: -0.5px;
+  line-height: 1.25;
+
+}
+
+.aboutus-container-top p {
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  unicode-bidi: isolate;
+
+}
+
+.aboutus-container-background {
+  background-color: #fff7cc;
+}
+
+.aboutus-container-bottom {
+  padding-left: 5rem;
+}
+
+.aboutus-container-bottom h1 {
+  font-family: Montserrat;
+  font-size: 18px;
+  font-weight: 500;
+}
+
+
+
+.container {
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  padding: 20px;
+}
+
+.img-holder {
+  margin-right: 20px;
+}
+
+.img-holder img {
+  max-width: 10rem;
+  max-height: 30rem;
+}
+
+.text-holder {
+  max-width: 600px;
+}
+
+.lists {
+  display: flex;
+  justify-content: center;
+}
+
+.list {
+  margin-right: 20px;
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.list:last-child {
+  margin-right: 0;
+}
+
+.custom-list {
+  list-style: none;
+  padding-left: 20px;
+}
+
+.list li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 10px;
+  /* Adjust the spacing between items as needed */
+}
+
+.list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  background-color: #72b84a;
+  border-radius: 50%;
+}
+
+
+
+/*************************************************************************************************/
+/* Preguntas Frecuentes design*/
+.ant-collapse-item.ant-collapse-item-active .ant-collapse-header {
+  background-color: white !important;
+}
+
+.ant-collapse-item.ant-collapse-item-active .ant-collapse-header span,
+.ant-collapse-item.ant-collapse-item-active .ant-collapse-header div {
+  color: black !important;
+}
+
+.ant-collapse-item .ant-collapse-header {
+  background-color: #084d86 !important;
+  color: white;
+}
+
+.ant-collapse-item .ant-collapse-header span,
+.ant-collapse-item .ant-collapse-header div {
+  color: white;
+}
+
+.Preguntas-main-container {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.Preguntas-main-container h1 {
+  font-family: Montserrat;
+  font-size: 42px;
+  font-weight: 600;
+  letter-spacing: -1.1px;
+  line-height: 1.2;
+  padding: 4rem;
+  margin: 0;
+  line-height: 1;
+  text-align: center;
+}
+
+.Preguntas-main-container div {
+
+  /* background-color: #f5deb3; */
+  padding-left: 1rem;
+  /* color: white */
+}
+
+.Preguntas-main-container span {
+
+  font-family: Montserrat;
+  font-size: 18px;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.Preguntas-main-container h2 {
+  font-family: Montserrat;
+  font-size: 24px;
+  font-weight: 500;
+  line-height: 1.45;
+  padding-top: 2rem;
+  padding-bottom: 2rem;
+  padding-left: 1rem;
+}
+
+.infos-link:hover {
+  color: green
+}
+
+.infos-link {
+  color: orange
+}

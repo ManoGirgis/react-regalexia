@@ -1,0 +1,21 @@
+.text-orange-600 {
+  color: #f07e19
+}
+
+.hover\:text-green-500:hover {
+  color: #72b84a !important;
+}
+
+.bg-yellow-600 {
+  background-color: #FED500;
+  color: #084D86;
+}
+
+.bg-orange-500 {
+  background-color: #f07e19;
+  color: white;
+}
+
+.login-head {
+  font-size: 16px;
+}

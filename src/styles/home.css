@@ -1,0 +1,74 @@
+@font-face {
+  font-family: 'Nunito';
+  src: local('Nunito'), url(./Fonts/Nunito/Nunito-Regular.woff) format('truetype');
+}
+
+.product-details {
+  margin: 20px;
+}
+
+/* @media(min-width:991) {} */
+.product-details .ant-col-xs-24 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+}
+
+.product-details img {
+  max-width: 25rem;
+  max-height: 30rem;
+  height: auto;
+}
+
+.product-details table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.product-details td {
+  padding: 10px;
+  border: 1px solid;
+}
+
+.product-details td img {
+  display: block;
+  margin: 0 auto;
+}
+
+.product-img-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  max-height: 40rem;
+  max-width: 30rem;
+  margin-bottom: 2rem;
+}
+
+.tablecoulmnsleft {
+  width: 35%;
+}
+
+.tablecoulmnsright {
+  width: 65%
+}
+
+p {
+  font-family: Nunito, sans-serif;
+  display: block;
+  margin-block-start: 1em;
+  margin-block-end: 1em;
+  margin-inline-start: 0px;
+  margin-inline-end: 0px;
+  unicode-bidi: isolate;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5 {
+  font-family: Montserrat;
+  color: #084d86;
+}

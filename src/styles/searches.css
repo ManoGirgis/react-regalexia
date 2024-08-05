@@ -1,0 +1,16 @@
+.No-results {
+  background-color: #3d9cd2;
+  clear: both;
+  margin-bottom: 20px;
+  margin-left: 0;
+  padding: 1em 1.618em;
+  border-left: .6180469716em solid rgba(0, 0, 0, .15);
+  border-radius: 2px;
+
+  font-size: 14px;
+  margin-top: 2rem;
+}
+
+.No-results h1 {
+  color: #fff;
+}
