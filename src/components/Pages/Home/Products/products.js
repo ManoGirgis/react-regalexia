@@ -21,10 +21,10 @@ const Products = () => {
     const setprod = (id) => {
         setSelectedProdId(id);
     }
-
+    console.log(products);
     return (
         <div>
-            {selectedProdId ? (
+        {selectedProdId ? ( 
                 <Showprod id={selectedProdId} />
             ) : <>
                 <div className="bg-white">
@@ -32,6 +32,7 @@ const Products = () => {
                         <h1 className="">Productos</h1>
                         <ul className="grid-products">
                             {products.map(product => (
+
                                 <Card
                                     onClick={() => setSelectedProdId(product.id)}
                                     key={product.id}
@@ -45,6 +46,7 @@ const Products = () => {
                                     imageAlt="Product-image"
                                     item="Product"
                                     click={setprod}
+                                    type={product.type}
                                 >
                                 </Card>
 
