@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import WoocommerceConnection from '../../../../connections/woocommerce';
 import prodimg from '../../../../Images/prodimg.png';
 import Navigation from "../../../Common/Reusables/Navigation";
-import AddCartbtn from '../../Carrito/AddCartbtn';
+import Reservarbtn from '../../Carrito/reservebtn';
 import { Row, Col } from "antd";
 
 const Showresrvable = (props) => {
@@ -75,7 +75,7 @@ const Showresrvable = (props) => {
                             </table>
                         </Col>
                         <Col span={24}>
-                        <AddCartbtn prod={product} />
+                        <Reservarbtn prod={product} />
                         </Col>
                     </Row>
                 </Col>

@@ -5,7 +5,7 @@ import { CiTrash, CiEdit } from "react-icons/ci";
 import { FaLock } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 
-const Carrito = () => {
+const carritoreservas = () => {
 
     const navigate = useNavigate();
 
@@ -18,27 +18,40 @@ const Carrito = () => {
         return Array.isArray(carrito) ? carrito : [];
     });
 
-    const redirectToCheckout = (prodID, quant) => {
-        const cartUrl = `https://regalafelicidad.com/cart/?add-to-cart=${prodID}&quantity=${quant}`;
+    const redirectToCheckout = (prodID, quant, start_date,start_time) => {
+        const cartUrl = `https://regalafelicidad.com/cart/?add-to-cart=${prodID}&appointment_type=1&quantity=${quant}&start_date=${start_date}&start_time=${start_time}`;
         window.location.href = cartUrl;
     };
-
+    
     const redirectToCheckoutAll = (cart) => {
-
-        let cartUrl = process.env.REACT_APP_WEBSITE_URL + '?add-to-cart=';
+        let cartUrl = `${process.env.REACT_APP_WEBSITE_URL}/cart/?add-to-cart=`;
+    
         cart.forEach((product, index) => {
-
             const separator = index === 0 ? '' : ',';
             cartUrl += `${separator}${product.id}`;
         });
-        cartUrl += `&quantities=`;
+    
+        cartUrl += '&quantities=';
         cart.forEach((product, index) => {
-
             const separator = index === 0 ? '' : ',';
             cartUrl += `${separator}${product.quantity}`;
         });
+    
+        cartUrl += '&start_dates=';
+        cart.forEach((product, index) => {
+            const separator = index === 0 ? '' : ',';
+            cartUrl += `${separator}${product.start_date}`;
+        });
+    
+        cartUrl += '&start_times=';
+        cart.forEach((product, index) => {
+            const separator = index === 0 ? '' : ',';
+            cartUrl += `${separator}${product.start_time}`;
+        });
+    
         window.location.href = cartUrl;
     };
+    
 
     const updateLocalStorage = (updatedCart) => {
         localStorage.setItem('Product', JSON.stringify(updatedCart));
@@ -108,7 +121,7 @@ const Carrito = () => {
                     >
                         <Button type="link" icon={<CiTrash />} />
                     </Popconfirm>
-                    <Button onClick={() => redirectToCheckout(record.id, record.quantity)} type="link" icon={<CiEdit />} />
+                    <Button onClick={() => redirectToCheckout(record.id, record.quantity,record.start_date,record.start_time)} type="link" icon={<CiEdit />} />
                 </div>
             ),
         },
@@ -134,4 +147,4 @@ const Carrito = () => {
     );
 };
 
-export default Carrito;
+export default carritoreservas;
