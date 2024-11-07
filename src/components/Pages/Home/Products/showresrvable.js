@@ -4,11 +4,15 @@ import prodimg from '../../../../Images/prodimg.png';
 import Navigation from "../../../Common/Reusables/Navigation";
 import Reservarbtn from '../../Carrito/reservebtn';
 import { Row, Col } from "antd";
+import { SlCalender } from "react-icons/sl";
+import { FaRegClock } from "react-icons/fa";
 
 const Showresrvable = (props) => {
     const [productId, setProductId] = useState(props.id);
     const { data: products, loading, error } = WoocommerceConnection("products");
     const [product, setProduct] = useState({});
+    const [fecha, setfecha] = useState('');
+    const [hora, sethora] = useState('');
 
     useEffect(() => {
         if (products && products.length > 0) {
@@ -29,6 +33,14 @@ const Showresrvable = (props) => {
     const prevProd = (prevId) => {
         setProductId(prevId);
     };
+
+    const handledate = (e) => {
+        setfecha(e.target.value);
+    }
+
+    const handletime = (e) => {
+        sethora(e.target.value);
+    }
 
     return (
         <div className="product-details">
@@ -60,12 +72,12 @@ const Showresrvable = (props) => {
                                         <td dangerouslySetInnerHTML={{ __html: product.description }} />
                                     </tr>
                                     <tr>
-                                        <td> Start Date: </td>
-                                        <td><input type="date" id="start_date" name="start_date" /></td>
+                                        <td> <b>Date: </b> </td>
+                                        <td><input type="date" id="start_date" name="start_date" onChange={handledate} /></td>
                                     </tr>
                                     <tr>
-                                        <td> Start time: </td>
-                                        <td><input type="time" id="start_time" name="start_time" /></td>
+                                        <td> <b>Time: </b> </td>
+                                        <td><input type="time" id="start_time" name="start_time" onChange={handletime} /></td>
                                     </tr>
                                     <tr>
                                         <td><b>Descripcion:</b></td>
@@ -75,7 +87,7 @@ const Showresrvable = (props) => {
                             </table>
                         </Col>
                         <Col span={24}>
-                        <Reservarbtn prod={product} />
+                            <Reservarbtn prod={product} date={fecha} time={hora} />
                         </Col>
                     </Row>
                 </Col>

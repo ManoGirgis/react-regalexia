@@ -5,6 +5,8 @@ import { CiTrash, CiEdit } from "react-icons/ci";
 import { FaLock } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 
+import Carritoreservas from '../Carrito/carritoreservas';
+
 const Carrito = () => {
 
     const navigate = useNavigate();
@@ -19,7 +21,7 @@ const Carrito = () => {
     });
 
     const redirectToCheckout = (prodID, quant) => {
-        const cartUrl = `https://regalafelicidad.com/cart/?add-to-cart=${prodID}&quantity=${quant}`;
+        const cartUrl = process.env.REACT_APP_WEBSITE_URL + `?add-to-cart=${prodID}&quantity=${quant}`;
         window.location.href = cartUrl;
     };
 
@@ -123,6 +125,7 @@ const Carrito = () => {
                     <Button onClick={redirectToCheckoutPage} type="primary" className='Finalcheck'>
                         <FaLock /> Finalizar compra
                     </Button>
+
                 </>
             ) : (
                 <div>
@@ -130,6 +133,8 @@ const Carrito = () => {
                     <p>No Hay Productos en el Carrito</p>
                 </div>
             )}
+            <hr className='carrito-separators'></hr>
+            <Carritoreservas />
         </div>
     );
 };

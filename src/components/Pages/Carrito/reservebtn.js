@@ -15,6 +15,8 @@ const Reservarbtn = (props) => {
             id: props.prod.id,
             name: props.prod.name,
             price: props.prod.price,
+            fecha: props.date,
+            hora: props.time,
             quantity: quantity
         };
 
@@ -25,10 +27,8 @@ const Reservarbtn = (props) => {
             cart.push(productToAdd);
         }
 
-        // Guardar el carrito actualizado en el localStorage
         localStorage.setItem('appointments', JSON.stringify(cart));
 
-        // Mostrar el carrito actualizado en la consola
         console.log(cart);
 
         Modal.success({

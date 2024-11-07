@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
 import Total from './Total';
-import { Table, InputNumber, Typography, Popconfirm, Button } from 'antd';
+import { Table, InputNumber, Popconfirm, Button } from 'antd';
 import { CiTrash, CiEdit } from "react-icons/ci";
 import { FaLock } from "react-icons/fa";
 import { useNavigate } from 'react-router-dom';
 
-const carritoreservas = () => {
-
+const CarritoReservas = () => {
     const navigate = useNavigate();
 
     const redirectToCheckoutPage = () => {
@@ -14,47 +13,46 @@ const carritoreservas = () => {
     };
 
     const [cart, setCart] = useState(() => {
-        let carrito = JSON.parse(localStorage.getItem('Product'));
+        let carrito = JSON.parse(localStorage.getItem('appointments'));
         return Array.isArray(carrito) ? carrito : [];
     });
 
-    const redirectToCheckout = (prodID, quant, start_date,start_time) => {
-        const cartUrl = `https://regalafelicidad.com/cart/?add-to-cart=${prodID}&appointment_type=1&quantity=${quant}&start_date=${start_date}&start_time=${start_time}`;
+    const redirectToCheckout = (prodID, quant, fecha, hora) => {
+        const cartUrl = `${process.env.REACT_APP_WEBSITE_URL}?add-to-cart=${prodID}&appointment_type=1&quantity=${quant}&start_date=${fecha}&start_time=${hora}`;
         window.location.href = cartUrl;
     };
-    
+
     const redirectToCheckoutAll = (cart) => {
-        let cartUrl = `${process.env.REACT_APP_WEBSITE_URL}/cart/?add-to-cart=`;
-    
+        let cartUrl = `${process.env.REACT_APP_WEBSITE_URL}?add-to-cart=`;
+
         cart.forEach((product, index) => {
             const separator = index === 0 ? '' : ',';
             cartUrl += `${separator}${product.id}`;
         });
-    
+
         cartUrl += '&quantities=';
         cart.forEach((product, index) => {
             const separator = index === 0 ? '' : ',';
             cartUrl += `${separator}${product.quantity}`;
         });
-    
+
         cartUrl += '&start_dates=';
         cart.forEach((product, index) => {
             const separator = index === 0 ? '' : ',';
-            cartUrl += `${separator}${product.start_date}`;
+            cartUrl += `${separator}${product.fecha}`;
         });
-    
+
         cartUrl += '&start_times=';
         cart.forEach((product, index) => {
             const separator = index === 0 ? '' : ',';
-            cartUrl += `${separator}${product.start_time}`;
+            cartUrl += `${separator}${product.hora}`;
         });
-    
+
         window.location.href = cartUrl;
     };
-    
 
     const updateLocalStorage = (updatedCart) => {
-        localStorage.setItem('Product', JSON.stringify(updatedCart));
+        localStorage.setItem('appointments', JSON.stringify(updatedCart));
     };
 
     const handleDelete = (id) => {
@@ -85,6 +83,16 @@ const carritoreservas = () => {
             title: 'Nombre',
             dataIndex: 'name',
             key: 'name',
+        },
+        {
+            title: 'Fecha',
+            dataIndex: 'fecha',
+            key: 'fecha',
+        },
+        {
+            title: 'Hora',
+            dataIndex: 'hora',
+            key: 'hora',
         },
         {
             title: 'Precio',
@@ -121,7 +129,7 @@ const carritoreservas = () => {
                     >
                         <Button type="link" icon={<CiTrash />} />
                     </Popconfirm>
-                    <Button onClick={() => redirectToCheckout(record.id, record.quantity,record.start_date,record.start_time)} type="link" icon={<CiEdit />} />
+                    <Button onClick={() => redirectToCheckout(record.id, record.quantity, record.fecha, record.hora)} type="link" icon={<CiEdit />} />
                 </div>
             ),
         },
@@ -139,12 +147,12 @@ const carritoreservas = () => {
                 </>
             ) : (
                 <div>
-                    <h1>Carrito</h1>
-                    <p>No Hay Productos en el Carrito</p>
+                    <h1>Excursion</h1>
+                    <p>No Hay Excursion en el Carrito</p>
                 </div>
             )}
         </div>
     );
 };
 
-export default carritoreservas;
+export default CarritoReservas;
