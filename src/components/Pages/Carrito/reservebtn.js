@@ -29,8 +29,6 @@ const Reservarbtn = (props) => {
 
         localStorage.setItem('appointments', JSON.stringify(cart));
 
-        console.log(cart);
-
         Modal.success({
             title: 'Excursion Reservada',
             content: `${props.prod.name} ha sido añadido a tu carrito.`,

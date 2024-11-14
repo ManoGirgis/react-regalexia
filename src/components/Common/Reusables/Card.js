@@ -4,7 +4,7 @@ export default function Card(props) {
     return (
         <li className='card-container product'>
             <div>
-                <a key={props.id} onClick={() => props.click(props.id)}>
+                <a key={props.id} onClick={() => props.click(props.id, props.type)}>
                     <img
                         src={props.image}
                         alt={props.imageAlt}
@@ -13,7 +13,7 @@ export default function Card(props) {
             </div>
             <div className='container-header'>
                 <div className='taxonomy_icon'>
-                    <a key={props.id} onClick={() => props.click(props.id)}>
+                    <a key={props.id} onClick={() => props.click(props.id, props.type)}>
                         <img
                             src="https://regalexia.com/wp-content/uploads/2023/04/creativo-negativo.png"
                             alt={props.imageAlt}
@@ -21,7 +21,7 @@ export default function Card(props) {
                     </a>
                 </div>
                 <div className='product-title'>
-                    <a key={props.id} onClick={() => props.click(props.id)}>{props.title}</a>
+                    <a key={props.id} onClick={() => props.click(props.id, props.type)}>{props.title}</a>
                 </div>
                 <div className='details-product'>
                     <div>

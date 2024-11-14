@@ -33,7 +33,7 @@ const Showprod = (props) => {
 
     return (
 
-        product.type === "appointment" ? <Showresrvable product={product} nextProd={nextProd} prevProd={prevProd} /> :
+        product.type === "appointment" ? <Showresrvable productId={props.id} nextProd={nextProd} prevProd={prevProd} /> :
             <div className="product-details">
                 <Row>
                     <Col xs={{ span: 24 }} lg={{ span: 12 }} className="tablecoulmnsleft">
