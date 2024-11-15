@@ -1,3 +1,4 @@
+import { Button } from 'antd';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
 
@@ -10,9 +11,7 @@ const Checkout = () => {
     const consumerSecret = process.env.REACT_APP_WC_CONSUMER_SECRET;
 
     const checkoutOrder = async () => {
-        const url = new URL(`${apiUrl}/orders`);
-        url.searchParams.append('consumer_key', consumerKey);
-        url.searchParams.append('consumer_secret', consumerSecret);
+        const url = `${apiUrl}/orders`;
 
         const orderData = {
             payment_method: 'bacs',
@@ -45,33 +44,47 @@ const Checkout = () => {
         };
 
         try {
+            const credentials = btoa(`${consumerKey}:${consumerSecret}`);
             const response = await fetch(url, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
+                    'Authorization': `Basic ${credentials}`,
                 },
                 body: JSON.stringify(orderData),
             });
 
             const data = await response.json();
-            console.log('Order created successfully:', data);
-            // Aquí puedes redirigir al usuario a una página de confirmación, etc.
+            if (response.ok) {
+                console.log('Order created successfully:', data);
+            } else {
+                console.error('Error creating order:', data);
+            }
         } catch (error) {
             console.error('Error creating order:', error);
         }
     };
 
+    const dataSource = cart.length > 0 ? cart.map(product => ({
+        ...product,
+        key: product.id,
+        total: product.price * product.quantity
+    })) : [];
+    console.log(dataSource);
     return (
         <div>
             <h2>Checkout</h2>
-            {/* Mostrar detalles del carrito */}
+            {/* Display cart details */}
             {cart.map(product => (
                 <div key={product.id}>
-                    <p>{product.name} - {product.quantity} x ${product.price}</p>
+                    <p>{product.name} - {product.quantity} x €{product.price}</p>
                 </div>
             ))}
-            {/* Botón para finalizar la compra */}
-            <button onClick={checkoutOrder}>Finalizar Compra</button>
+            <p>{dataSource.key}</p>
+            {/* Button to complete the purchase */}
+            <Button onClick={checkoutOrder} type="primary" className='Finalcheck'>
+                Finalizar Compra
+            </Button>
         </div>
     );
 };

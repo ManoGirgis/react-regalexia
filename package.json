@@ -2,6 +2,7 @@
   "name": "regalafelicidad",
   "version": "0.1.0",
   "private": true,
+  "proxy": "https://regalafelicidad.com",
   "dependencies": {
     "@apollo/client": "^3.10.8",
     "@emotion/react": "^11.11.4",
@@ -25,6 +26,7 @@
     "react-icons": "^5.2.1",
     "react-router-dom": "^6.23.1",
     "react-scripts": "5.0.1",
+    "redsys-easy": "^5.2.6",
     "regalafelicidad": "file:",
     "web-vitals": "^2.1.4"
   },
