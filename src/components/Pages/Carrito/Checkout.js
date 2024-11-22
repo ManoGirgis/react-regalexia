@@ -1,13 +1,13 @@
 import { Button } from 'antd';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import Payment from '../../../connections/payment';
+//import Payment from '../../../connections/payment';
 
 const Checkout = () => {
     const location = useLocation();
     const { cart } = location.state || { cart: [] };
     const [sum, setSum] = React.useState(0);
-    const { handlePayment, response, loading, error } = Payment();
+    //const { handlePayment, response, loading, error } = Payment();
 
     const apiUrl = process.env.REACT_APP_WOO_WORDPRESS_API_URL;
     const consumerKey = process.env.REACT_APP_WC_CONSUMER_KEY;
@@ -53,35 +53,35 @@ const Checkout = () => {
 
         //  const state = handlePayment(sum);
 
-        if (state) {
-            try {
-                const credentials = btoa(`${consumerKey}:${consumerSecret}`);
-                const response = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Basic ${credentials}`,
-                    },
-                    body: JSON.stringify(orderData),
-                });
- 
-                const data = await response.json();
-                if (response.ok) {
-                    console.log('Order created successfully:', data);
-                    localStorage.removeItem('Product');
-                    localStorage.removeItem('appointments');
-                } else {
-                    console.error('Error creating order:', data);
-                }
-            } catch (error) {
-                console.error('Error creating order:', error);
+        // if (state) {
+        try {
+            const credentials = btoa(`${consumerKey}:${consumerSecret}`);
+            const response = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Basic ${credentials}`,
+                },
+                body: JSON.stringify(orderData),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                console.log('Order created successfully:', data);
+                localStorage.removeItem('Product');
+                localStorage.removeItem('appointments');
+            } else {
+                console.error('Error creating order:', data);
             }
-        } else {
-            <div>
-                <h1>Payment failed</h1>
-                <p>{error}</p>
-            </div>
+        } catch (error) {
+            console.error('Error creating order:', error);
         }
+        // } else {
+        //     <div>
+        //         <h1>Payment failed</h1>
+        //         <p>{error}</p>
+        //     </div>
+        // }
 
 
     };
