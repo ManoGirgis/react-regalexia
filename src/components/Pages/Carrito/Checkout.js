@@ -1,7 +1,7 @@
 import { Button } from 'antd';
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-//import Payment from '../../../connections/payment';
+import Payment from '../../../connections/payment';
 
 const Checkout = () => {
     const location = useLocation();
