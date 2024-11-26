@@ -12,8 +12,8 @@ const Footer = () => {
                         <h1 className='colhead'>¿NECESITAS AYUDA?</h1>
                         <a href='https://wa.me/+34640030604?text=Hola%20me%20gustar%C3%ADa%20hacer%20una%20consulta'>Envíanos un mensaje</a><br></br>
                         <a href='/preguntas'>Preguntas frecuentes</a><br></br>
-                        <a href=''>Cambio de fecha</a><br></br>
-                        <a href=''>ERegalo Conjunto</a>
+                        <a href='#'>Cambio de fecha</a><br></br>
+                        <a href='#'>ERegalo Conjunto</a>
                     </div>
                 </Col>
                 <Col xs={{ span: 24 }} lg={{ span: 4 }} className='footer-columns'>

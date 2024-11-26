@@ -1,42 +1,43 @@
-import React, { useState, useAuth } from 'react';
+import React from 'react';
 import logo from './../../../Images/logo-large.png';
-import { request, gql } from 'graphql-request';
+//import { gql } from 'graphql-request';
 
-const LOGIN_URL = 'https://regalafelicidad.com/rfs/graphql';
+//const LOGIN_URL = 'https://regalafelicidad.com/rfs/graphql';
 
-const LOGIN_MUTATION = gql`
-  mutation LoginUser($username: String!, $password: String!) {
-    login(input: { username: $username, password: $password }) {
-      authToken
-      user {
-        id
-        name
-      }
-    }
-  }
-`;
+// const LOGIN_MUTATION = gql`
+//   mutation LoginUser($username: String!, $password: String!) {
+//     login(input: { username: $username, password: $password }) {
+//       authToken
+//       user {
+//         id
+//         name
+//       }
+//     }
+//   }
+// `;
 
 const Login = () => {
-    const [username, setUsername] = useState('');
-    const [password, setPassword] = useState('');
-    const [error, setError] = useState(null);
+    // const [username, setUsername] = useState('');
+    // const [password, setPassword] = useState('');
+    // const [error, setError] = useState(null);
 
-    const handleLogin = async (e) => {
-        e.preventDefault();
-        try {
-            const variables = { username, password };
-            const response = await request(LOGIN_URL, LOGIN_MUTATION, variables);
-            const { authToken, user } = response.login;
-            localStorage.setItem('token', authToken);
-            setError(null);
-        } catch (error) {
-            setError('Login failed. Please check your credentials.');
-        }
-    };
+    // const handleLogin = async (e) => {
+    //     e.preventDefault();
+    //     try {
+    //         const variables = { username, password };
+    //         const response = await request(LOGIN_URL, LOGIN_MUTATION, variables);
+    //         const { authToken, user } = response.login;
+    //         localStorage.setItem('token', authToken);
+    //         setError(null);
+    //     } catch (error) {
+    //         setError('Login failed. Please check your credentials.');
+    //     }
+    // };
 
 
     return (
-        <form onSubmit={handleLogin}>
+        <form >
+            {/* onSubmit={handleLogin} */}
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
                 <div className="sm:mx-auto sm:w-full sm:max-w-sm">
                     <img
@@ -64,7 +65,7 @@ const Login = () => {
                                     autoComplete="email"
                                     required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    onChange={(e) => setUsername(e.target.value)}
+                                    // onChange={(e) => setUsername(e.target.value)}
                                     placeholder=' Nombre de usuario o correo electrónico'
                                 />
                             </div>
@@ -89,7 +90,7 @@ const Login = () => {
                                     autoComplete="current-password"
                                     required
                                     className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                                    onChange={(e) => setPassword(e.target.value)}
+                                    // onChange={(e) => setPassword(e.target.value)}
                                     placeholder=' Contraseña'
 
                                 />

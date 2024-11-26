@@ -6,6 +6,7 @@ const Navigation = (props) => {
     const { data: item, loading, error } = WoocommerceConnection(props.navi);
     const [next, setNext] = useState(null);
     const [prev, setPrev] = useState(null);
+    const [current, setCurrent] = useState(props.current);
 
     useEffect(() => {
         if (item && item.length > 0) {
@@ -25,7 +26,7 @@ const Navigation = (props) => {
                 }
             }
         }
-    }, [item, props.current]);
+    }, [item, current]);
 
     useEffect(() => {
         console.log('Next item:', next);

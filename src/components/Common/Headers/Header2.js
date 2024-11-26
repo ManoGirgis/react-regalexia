@@ -17,15 +17,16 @@ const Header2 = () => {
 
     useEffect(() => {
         if (isLocalStorage) {
-            setCarrito(count)
-            let total = 0
-            let cart = JSON.parse(localStorage.getItem('Product'))
+            setCarrito(count);
+            let total = 0;
+            let cart = JSON.parse(localStorage.getItem('Product'));
             cart.forEach(product => {
-                total += product.price * product.quantity
+                total += product.price * product.quantity;
             });
-            setPrice(total.toFixed(2))
+            setPrice(total.toFixed(2));
         }
-    }, [count])
+    }, [count, isLocalStorage]);
+    
 
 
     return (

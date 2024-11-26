@@ -3,7 +3,7 @@ import { useQuery } from '@apollo/client';
 import { Get_Posts } from './../../../connections/queries';
 
 const AsideMenu = () => {
-    const [selectedPostId, setSelectedPostId] = useState(null);
+    //  const [selectedPostId, setSelectedPostId] = useState(null);
     const { loading, error, data: sidedata } = useQuery(Get_Posts, {
         variables: {
             first: 5,
@@ -20,7 +20,7 @@ const AsideMenu = () => {
             <span className='title-aside'>Consejos para padres</span>
             <div className='aside-posts'>
                 {posts.map(post => (
-                    <a key={post.id} onClick={() => setSelectedPostId(post.id)} href={'/' + "posts/" + post.id} className='Blog-linker'>
+                    <a key={post.id} href={'/' + "posts/" + post.id} className='Blog-linker'>
                         {post.title}
                     </a>
                 ))}

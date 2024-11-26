@@ -1,8 +1,8 @@
+
 import React from 'react';
 import logo from './../../../Images/logo-large.png';
 import KidsClusterSinTexto from './../../../Images/aboutus/KidsClusterSinTexto.webp';
 import { FaFacebook, FaYoutube, FaInstagram } from "react-icons/fa";
-import { Row, Col } from "antd";
 
 const CopyRights = () => {
     return (

@@ -400,9 +400,7 @@ const items1: CollapseProps['items'] = [
 class preguntasfreq extends Component {
 
     render() {
-        const onChange = (key: string | string[]) => {
-            console.log(key);
-        };
+
         return (
             <div className='Preguntas-main-container'>
                 <h1>Preguntas frecuentes</h1>
