@@ -1,22 +1,19 @@
 import React, { useState } from "react";
-import { createPaymentForm } from "./RedsysApi";
+import { createPaymentForm } from "./RedsysApi"; // Function to interact with Redsys API.
 
 const Payment = () => {
-    const [response, setResponse] = useState(false);
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
-    const handlePayment = async (sum) => {
+    const handlePayment = async (cart, totalAmount, billingDetails) => {
         setLoading(true);
-        setResponse(null);
         setError(null);
 
         try {
-            const totalAmount = Math.round(sum * 100);
-
+            // Generate the payment request for Redsys
             const paymentData = {
-                Ds_Merchant_Amount: totalAmount.toString(),
-                Ds_Merchant_Currency: "978",
+                Ds_Merchant_Amount: Math.round(totalAmount * 100).toString(), // Amount in cents
+                Ds_Merchant_Currency: "978", // EUR currency code
                 Ds_Merchant_Order: Math.floor(Math.random() * 1000000000000).toString().padStart(12, "0"),
                 Ds_Merchant_MerchantCode: process.env.REACT_APP_REDSYS_MERCHANT_CODE,
                 Ds_Merchant_Terminal: "1",
@@ -26,28 +23,29 @@ const Payment = () => {
                 Ds_Merchant_UrlKO: `${process.env.REACT_APP_SITE_URL}/payment-failure`,
             };
 
+            // Create a payment form with Redsys
             const formHtml = await createPaymentForm(paymentData);
 
+            // Redirect user to Redsys payment form
             const wrapper = document.createElement("div");
             wrapper.innerHTML = formHtml;
             document.body.appendChild(wrapper);
 
             const formElement = wrapper.querySelector("form");
             if (formElement) {
-                formElement.submit();
-                setResponse("Payment initiated");
+                formElement.submit(); // Automatically submit the form
             } else {
-                throw new Error("Form element not found");
+                throw new Error("Failed to generate payment form.");
             }
         } catch (error) {
             console.error("Error initiating Redsys payment:", error);
-            setError("Error initiating payment. Please try again.");
+            setError("Payment initialization failed. Please try again.");
         } finally {
             setLoading(false);
         }
     };
 
-    return { handlePayment, response, loading, error };
+    return { handlePayment, loading, error };
 };
 
 export default Payment;

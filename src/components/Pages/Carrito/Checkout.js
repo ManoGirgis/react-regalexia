@@ -1,16 +1,16 @@
 import { Button } from "antd";
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import Payment from "../../../connections/payment";
+//import Payment from "../../../connections/payment";
 
 const Checkout = () => {
   const location = useLocation();
   const { cart } = location.state || { cart: [] };
   const [sum, setSum] = useState(0);
   const [paymentInitiated, setPaymentInitiated] = useState(false);
-  const { handlePayment, response: resp, loading, error } = Payment();
+  // const { handlePayment, response: resp, loading, error } = Payment();
 
-  const apiUrl = process.env.REACT_APP_WOO_WORDPRESS_API_URL;
+  const apiUrl = `${process.env.REACT_APP_WC_STORE_URL}/wp-json/wc/v3/orders`;
   const consumerKey = process.env.REACT_APP_WC_CONSUMER_KEY;
   const consumerSecret = process.env.REACT_APP_WC_CONSUMER_SECRET;
 
@@ -21,52 +21,29 @@ const Checkout = () => {
   }, [cart]);
 
   const checkoutOrder = async () => {
+    window.location.href = "/Payment-Finish"
+
     if (!cart.length) return;
 
-    // Initiate payment
-    await handlePayment(sum);
-    setPaymentInitiated(true);
-
-    if (!resp) {
-      console.error("Payment failed:", error);
-      return;
-    }
-
-    // Create WooCommerce order after successful payment
-    const url = `${apiUrl}/orders`;
-    const orderData = {
-      payment_method: "bacs",
-      payment_method_title: "Direct Bank Transfer",
-      set_paid: true,
-      billing: {
-        first_name: "John",
-        last_name: "Doe",
-        address_1: "969 Market",
-        city: "San Francisco",
-        state: "CA",
-        postcode: "94103",
-        country: "US",
-        email: "john.doe@example.com",
-        phone: "(555) 555-5555",
-      },
-      shipping: {
-        first_name: "John",
-        last_name: "Doe",
-        address_1: "969 Market",
-        city: "San Francisco",
-        state: "CA",
-        postcode: "94103",
-        country: "US",
-      },
-      line_items: cart.map((item) => ({
-        product_id: item.id,
-        quantity: item.quantity,
-      })),
-    };
-
     try {
+      // WooCommerce Order Creation
       const credentials = btoa(`${consumerKey}:${consumerSecret}`);
-      const response = await fetch(url, {
+      const orderData = {
+        payment_method: "redsys",
+        payment_method_title: "Redsys",
+        set_paid: false,
+        billing: {
+          first_name: "John",
+          last_name: "Doe",
+          email: "john.doe@example.com",
+        },
+        line_items: cart.map((item) => ({
+          product_id: item.id,
+          quantity: item.quantity,
+        })),
+      };
+
+      const orderResponse = await fetch(apiUrl, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -75,16 +52,21 @@ const Checkout = () => {
         body: JSON.stringify(orderData),
       });
 
-      const data = await response.json();
-      if (response.ok) {
-        console.log("Order created successfully:", data);
-        localStorage.removeItem("Product");
-        localStorage.removeItem("appointments");
+      if (!orderResponse.ok) {
+        throw new Error("Error creating WooCommerce order");
+      }
+
+      const order = await orderResponse.json();
+      console.log("Order created successfully:", order);
+
+      // Redirect to Redsys Payment
+      if (order.redirect_url) {
+        window.location.href = order.redirect_url;
       } else {
-        console.error("Error creating order:", data);
+        console.error("Redsys payment URL not provided in the response");
       }
     } catch (error) {
-      console.error("Error creating order:", error);
+      console.error("Error during checkout:", error);
     }
   };
 
@@ -100,12 +82,12 @@ const Checkout = () => {
         </div>
       ))}
       <p>Total: €{sum.toFixed(2)}</p>
-      {loading && <p>Processing payment...</p>}
-      {paymentInitiated && error && <p style={{ color: "red" }}>Payment failed: {error}</p>}
-      {paymentInitiated && resp && <p style={{ color: "green" }}>Payment successful!</p>}
+      {/*loading && <p>Processing payment...</p>*/}
+      {/*paymentInitiated && error && <p style={{ color: "red" }}>Payment failed: {error}</p>*/}
+      {/*paymentInitiated && resp && <p style={{ color: "green" }}>Payment successful!</p>*/}
       {/* Button to complete the purchase */}
-      <Button onClick={checkoutOrder} type="primary" className="Finalcheck" disabled={loading}>
-        {loading ? "Processing..." : "Finalizar Compra"}
+      <Button onClick={checkoutOrder} type="primary" className="Finalcheck">
+        {/*loading ? "Processing..." : "Finalizar Compra"*/}Finalizar Compra
       </Button>
     </div>
   );
