@@ -32,7 +32,7 @@ class Routing extends Component {
                     <Route path="/cart" element={<Carrito />} />
                     <Route path="/search" element={<Search />} />
                     <Route path="/checkout" element={<Checkout />} />
-                    <Route path="/Payment-Finish" element={<RedsysComponent />} />
+                    <Route path="/redsys" element={<RedsysComponent />} />
                     <Route path="/payment-success" element={<Paysuccess />} />
                     <Route path="/payment-failure" element={<Payfail />} />
                 </Routes>

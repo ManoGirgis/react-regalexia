@@ -109,8 +109,6 @@ body {
   justify-content: space-between;
 }
 
-.user-head {}
-
 .nav-item {
   margin-right: 20px;
   margin-left: 20px;
@@ -452,7 +450,15 @@ a {
 }
 
 .payment-form {
-   height: 20rem; 
+  height: 20rem;
   margin-top: 10rem;
   display: hidden;
+}
+
+.paymentframe {
+  height: 20rem;
+}
+
+#redsys-hosted-pay-button {
+  height: 600px !important;
 }

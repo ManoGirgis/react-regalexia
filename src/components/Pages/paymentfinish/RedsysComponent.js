@@ -1,17 +1,26 @@
 /* global getInSiteFormJSON, storeIdOper */
 
 import React, { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const RedsysComponent = () => {
+    const location = useLocation();
+    const { orderId, order } = location.state || {};
+
     useEffect(() => {
-        // Load the Redsys script
+        if (!orderId) {
+            console.error("No order information provided.");
+            return;
+        }
+
+        console.log("Order ID:", orderId);
+        console.log("Order Details:", order);
+
         const script = document.createElement("script");
         script.src = "https://sis-t.redsys.es:25443/sis/NC/sandbox/redsysV3.js";
         script.async = true;
         script.onload = () => {
             console.log("Redsys script loaded successfully.");
-
-            // Initialize the InSite form after the script is loaded
             const pedido = () => "pedido" + Math.floor(Math.random() * 1000 + 1);
             const insiteJSON = {
                 id: "card-form",
@@ -22,54 +31,36 @@ const RedsysComponent = () => {
             };
 
             if (typeof getInSiteFormJSON === "function") {
+                console.log("Initializing InSite form...");
                 getInSiteFormJSON(insiteJSON);
+                window.location.href = "/payment-success";
             } else {
                 console.error("getInSiteFormJSON is not available.");
+                window.location.href = "/payment-failure"
             }
         };
         document.body.appendChild(script);
 
-        // Clean up the script and event listener on unmount
         return () => {
             document.body.removeChild(script);
         };
-    }, []);
+    }, [orderId]);
 
-    useEffect(() => {
-        // Add event listener for the Redsys communication
-        const merchantValidationEjemplo = () => {
-            alert("Esto son validaciones propias");
-            return true;
-        };
+    const msghandler = () => {
+        const token = document.getElementById("token").value;
+        const errorCode = document.getElementById("errorCode").value;
 
-        const messageHandler = (event) => {
-            if (typeof storeIdOper === "function") {
-                storeIdOper(event, "token", "errorCode", merchantValidationEjemplo);
-            } else {
-                console.error("storeIdOper is not available.");
-            }
-        };
-
-        window.addEventListener("message", messageHandler);
-
-        return () => {
-            window.removeEventListener("message", messageHandler);
-        };
-    }, []);
-
+        alert(`${token} -- ${errorCode}`);
+    }
     return (
-        <div>
-            <div id="card-form" ></div>
-            <form name="datos" className="payment-form">
+        <div className="paymentframe">
+            <div id="card-form"></div>
+            <form name="datos">
                 <input type="hidden" id="token" name="token" />
                 <input type="hidden" id="errorCode" name="errorCode" />
                 <button
                     type="button"
-                    onClick={() => {
-                        const token = document.forms.datos.token.value;
-                        const errorCode = document.forms.datos.errorCode.value;
-                        alert(`${token} -- ${errorCode}`);
-                    }}
+                    onClick={msghandler}
                 >
                     Ver
                 </button>
