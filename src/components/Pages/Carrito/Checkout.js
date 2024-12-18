@@ -9,7 +9,6 @@ const Checkout = () => {
   const { cart } = location.state || { cart: [] };
   const [sum, setSum] = useState(0);
 
-  // Calculate total sum on cart update
   useEffect(() => {
     const totalSum = cart.reduce((acc, item) => acc + item.price * item.quantity, 0);
     setSum(totalSum);
@@ -17,7 +16,7 @@ const Checkout = () => {
 
   const handleCheckout = () => {
     if (cart.length > 0) {
-      checkoutOrder(cart, navigate); // Pass the navigate function
+      checkoutOrder(cart, navigate); 
     } else {
       console.error("Cart is empty. Cannot proceed with checkout.");
     }

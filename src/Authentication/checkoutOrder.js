@@ -4,12 +4,12 @@ const checkoutOrder = async (cart, navigate) => {
     return;
   }
 
-  const apiUrl = `${process.env.REACT_APP_WC_STORE_URL}/wp-json/wc/v3/orders`;
+  const apiUrl = `${process.env.REACT_APP_WC_STORE_URL}wp-json/wc/v3/orders`;
   const consumerKey = process.env.REACT_APP_WC_CONSUMER_KEY;
   const consumerSecret = process.env.REACT_APP_WC_CONSUMER_SECRET;
 
   try {
-    // WooCommerce Order Creation
+
     const credentials = btoa(`${consumerKey}:${consumerSecret}`);
     const orderData = {
       payment_method: "redsys",
@@ -39,10 +39,11 @@ const checkoutOrder = async (cart, navigate) => {
       throw new Error("Error creating WooCommerce order");
     }
 
+    console.log("Order created successfully:", orderResponse)
+
     const order = await orderResponse.json();
     console.log("Order created successfully:", order);
 
-    // Navigate to Redsys Payment Component
     navigate("/redsys", { state: { orderId: order.id, order } });
   } catch (error) {
     console.error("Error during checkout:", error);

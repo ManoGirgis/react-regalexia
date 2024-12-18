@@ -4,9 +4,9 @@ import { useLocation } from "react-router-dom";
 const PaymentFinish = () => {
     const location = useLocation();
 
-    // Get order_id and status from query parameters
     const queryParams = new URLSearchParams(location.search);
-    const orderId = queryParams.get("order_id");
+    const { orderId, order } = location.state || {};
+    //const orderId = queryParams.get("order_id");
     const paymentStatus = queryParams.get("status");
 
     useEffect(() => {
@@ -23,12 +23,17 @@ const PaymentFinish = () => {
     }, [orderId, paymentStatus]);
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            window.location.href = "/";
-        }, 5000);
-        localStorage.removeItem('appointments')
-        localStorage.removeItem('Product')
-        return () => clearTimeout(timer);
+        if (paymentStatus === "success") {
+            const timer = setTimeout(() => {
+                window.location.href = "/";
+            }, 5000);
+
+            localStorage.removeItem('appointments')
+            localStorage.removeItem('Product')
+
+
+            return () => clearTimeout(timer);
+        }
     }, [])
 
     const updateOrderStatus = async (orderId, status = "completed") => {

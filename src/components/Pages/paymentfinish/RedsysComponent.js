@@ -3,7 +3,7 @@
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-const RedsysComponent = () => {
+const RedsysComponent = (navigate) => {
     const location = useLocation();
     const { orderId, order } = location.state || {};
 
@@ -33,10 +33,8 @@ const RedsysComponent = () => {
             if (typeof getInSiteFormJSON === "function") {
                 console.log("Initializing InSite form...");
                 getInSiteFormJSON(insiteJSON);
-                window.location.href = "/payment-success";
-            } else {
-                console.error("getInSiteFormJSON is not available.");
-                window.location.href = "/payment-failure"
+                navigate("/payment-done", { state: { orderId, order } });
+                // window.location.href = "/payment-done";
             }
         };
         document.body.appendChild(script);

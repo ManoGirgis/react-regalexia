@@ -33,7 +33,7 @@ class Routing extends Component {
                     <Route path="/search" element={<Search />} />
                     <Route path="/checkout" element={<Checkout />} />
                     <Route path="/redsys" element={<RedsysComponent />} />
-                    <Route path="/payment-success" element={<Paysuccess />} />
+                    <Route path="/payment-done" element={<Paysuccess />} />
                     <Route path="/payment-failure" element={<Payfail />} />
                 </Routes>
             </BrowserRouter>
