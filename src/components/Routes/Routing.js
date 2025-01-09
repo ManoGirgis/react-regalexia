@@ -13,8 +13,8 @@ import Checkout from '../Pages/Carrito/Checkout';
 
 import React, { Component } from 'react'
 import Paysuccess from '../Pages/paymentfinish/paysuccess';
-import Payfail from '../Pages/paymentfinish/payfail';
-import RedsysComponent from '../Pages/paymentfinish/RedsysComponent';
+import Paycomponent from '../Pages/paymentfinish/Paycomponent';
+
 
 class Routing extends Component {
     render() {
@@ -32,9 +32,8 @@ class Routing extends Component {
                     <Route path="/cart" element={<Carrito />} />
                     <Route path="/search" element={<Search />} />
                     <Route path="/checkout" element={<Checkout />} />
-                    <Route path="/redsys" element={<RedsysComponent />} />
+                    <Route path="/redsys" element={<Paycomponent />} />
                     <Route path="/payment-done" element={<Paysuccess />} />
-                    <Route path="/payment-failure" element={<Payfail />} />
                 </Routes>
             </BrowserRouter>
         )

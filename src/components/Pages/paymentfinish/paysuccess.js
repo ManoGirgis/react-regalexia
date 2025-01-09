@@ -5,25 +5,23 @@ const PaymentFinish = () => {
     const location = useLocation();
 
     const queryParams = new URLSearchParams(location.search);
-    const { orderId, order } = location.state || {};
-    //const orderId = queryParams.get("order_id");
-    const paymentStatus = queryParams.get("status");
+    const { orderId, order, status, errorCode } = location.state || {};
+    console.log("orderId:", orderId);
+    console.log("Error:", errorCode);
 
     useEffect(() => {
-        if (orderId && paymentStatus === "success") {
+        if (orderId && !errorCode == "") {
             updateOrderStatus(orderId, "completed");
         } else {
             console.error("Payment failed or invalid order ID.");
         }
-        if (orderId && paymentStatus === "failed") {
-            updateOrderStatus(orderId, "failed");
-        } else {
+        if (orderId && errorCode) {
             console.error("Payment failed or invalid order ID.");
         }
-    }, [orderId, paymentStatus]);
+    }, [orderId, errorCode]);
 
     useEffect(() => {
-        if (paymentStatus === "success") {
+        if (!errorCode == "") {
             const timer = setTimeout(() => {
                 window.location.href = "/";
             }, 5000);
@@ -64,8 +62,8 @@ const PaymentFinish = () => {
 
     return (
         <div>
-            <h1>Payment {paymentStatus === "success" ? "Successful" : "Failed"}</h1>
-            {paymentStatus === "success" ? (
+            <h1>Payment {errorCode == null ? "Success" : "Failure"}</h1>
+            {errorCode == null ? (
                 <p>Your order has been completed successfully!</p>
             ) : (
                 <p>There was an issue with your payment. Please try again.</p>

@@ -1,9 +1,10 @@
 /* global getInSiteFormJSON, storeIdOper */
 
 import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
-const RedsysComponent = (navigate) => {
+const RedsysComponent = () => {
+    const navigate = useNavigate();
     const location = useLocation();
     const { orderId, order } = location.state || {};
 
@@ -33,8 +34,8 @@ const RedsysComponent = (navigate) => {
             if (typeof getInSiteFormJSON === "function") {
                 console.log("Initializing InSite form...");
                 getInSiteFormJSON(insiteJSON);
-                navigate("/payment-done", { state: { orderId, order } });
-                // window.location.href = "/payment-done";
+            } else {
+                console.error("getInSiteFormJSON is not available.");
             }
         };
         document.body.appendChild(script);
@@ -44,16 +45,58 @@ const RedsysComponent = (navigate) => {
         };
     }, [orderId]);
 
+    useEffect(() => {
+        // const messageHandler = (event) => {
+        //     console.log("Payment response received:", event);
+
+        //     // Example: Check if the payment was successful or failed
+        //     const { token, errorCode } = event.data || {};
+        //     if (token && !errorCode) {
+        //         console.log("Payment successful.");
+        //         navigate("/payment-done", {
+        //             state: { orderId, order, status: "success" },
+        //         });
+        //     } else {
+        //         console.error("Payment failed with errorCode:", errorCode);
+        //         navigate("/payment-done", {
+        //             state: { orderId, order, status: "failure", errorCode },
+        //         });
+        //     }
+        // };
+
+        window.addEventListener("message", messageHandler);
+
+        return () => {
+            window.removeEventListener("message", messageHandler);
+        };
+    }, [orderId, navigate]);
+
     const msghandler = () => {
         const token = document.getElementById("token").value;
         const errorCode = document.getElementById("errorCode").value;
 
         alert(`${token} -- ${errorCode}`);
-    }
+    };
+
+
+    const messageHandler = (event) => {
+        //     const { token, errorCode } = event.data || {};
+        //     if (token && !errorCode) {
+        //         navigate("/payment-done", {
+        //             state: { orderId, order, status: "success" },
+        //         });
+        //     } else {
+        //         navigate("/payment-done", {
+        //             state: { orderId, order, status: "failure", errorCode },
+        //         });
+        //     }
+    };
+
+
     return (
         <div className="paymentframe">
             <div id="card-form"></div>
-            <form name="datos">
+            {/* <form name="datos">
                 <input type="hidden" id="token" name="token" />
                 <input type="hidden" id="errorCode" name="errorCode" />
                 <button
@@ -61,8 +104,8 @@ const RedsysComponent = (navigate) => {
                     onClick={msghandler}
                 >
                     Ver
-                </button>
-            </form>
+                </button> 
+            </form>*/}
         </div>
     );
 };
