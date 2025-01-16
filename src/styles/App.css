@@ -462,3 +462,15 @@ a {
 #redsys-hosted-pay-button {
   height: 600px !important;
 }
+
+.redsysIframe {
+  width: 50%;
+  height: 600px;
+  border: none;
+
+}
+
+.card-redsys {
+  display: flex;
+  justify-content: center;
+}

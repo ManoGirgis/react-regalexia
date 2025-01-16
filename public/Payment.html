@@ -1,43 +1,61 @@
+<div id="card-form"></div>
+<form name="datos">
+  <input type="hidden" id="token" />
+  <input type="hidden" id="errorCode" />
+</form>
+<script src="https://sis-t.redsys.es:25443/sis/NC/sandbox/redsysV3.js"></script>
+<script>
+  function merchantValidationEjemplo() {
+    // Insertar validaciones propias
+    alert("Esto son validaciones propias");
+    return true;
+  }
 
-<html>
-<head>
-    <meta charset="utf-8">
-    <title>Redsys Integration</title>
-    <script src="https://sis-t.redsys.es:25443/sis/NC/sandbox/redsysV3.js"></script>
-</head>
-<body>
-    <div id="card-form"></div>
-    <form name="datos">
-        <input type="hidden" id="token" />
-        <input type="hidden" id="errorCode" />
-        <a href="javascript:alert(document.datos.token.value + '--' + document.datos.errorCode.value)">Ver</a>
-    </form>
+  // Listener de recepción de ID de operación
+  window.addEventListener("message", function receiveMessage(event) {
+    storeIdOper(event, "token", "errorCode", merchantValidationEjemplo);
 
-    <script>
-        function merchantValidationEjemplo() {
-            // Insertar validaciones propias
-            alert("Esto son validaciones propias");
-            return true;
-        }
+    // Retrieve token and errorCode
+    const token = document.getElementById("token").value;
+    const errorCode = document.getElementById("errorCode").value;
 
-        // Listener de recepción de ID de operación
-        window.addEventListener("message", function receiveMessage(event) {
-            storeIdOper(event, "token", "errorCode", merchantValidationEjemplo);
-        });
+    // Send a message with the payment status to React
+    const paymentStatus = errorCode ? "failure" : "success";
+    const message = {
+      status: paymentStatus,
+      token: token,
+      errorCode: errorCode,
+    };
+    window.parent.postMessage(message, "*"); // Send message to React
+    if (event.data === "payment-success") {
+      parent.postMessage(
+        { status: "success", token: document.getElementById("token").value },
+        "*"
+      );
+    } else if (event.data === "payment-failed") {
+      parent.postMessage(
+        {
+          status: "failure",
+          errorCode: document.getElementById("errorCode").value,
+        },
+        "*"
+      );
+    }
 
-        function pedido() {
-            return "pedido" + Math.floor(Math.random() * 1000 + 1);
-        }
+    window.location.href = `/payment-done?status=${paymentStatus}&token=${token}&errorCode=${errorCode}`;
+  });
 
-        var insiteJSON = {
-            id: "card-form",
-            fuc: "999008881",
-            terminal: "1",
-            order: pedido(),
-            estiloInsite: "twoRows",
-        };
+  function pedido() {
+    return "pedido" + Math.floor(Math.random() * 1000 + 1);
+  }
 
-        getInSiteFormJSON(insiteJSON);
-    </script>
-</body>
-</html>
+  var insiteJSON = {
+    id: "card-form",
+    fuc: "999008881",
+    terminal: "1",
+    order: pedido(),
+    estiloInsite: "twoRows",
+  };
+
+  getInSiteFormJSON(insiteJSON);
+</script>

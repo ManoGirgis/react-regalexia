@@ -12,7 +12,7 @@ import Search from './../Pages/Home/Search/Searched';
 import Checkout from '../Pages/Carrito/Checkout';
 
 import React, { Component } from 'react'
-import Paysuccess from '../Pages/paymentfinish/paysuccess';
+import Paysuccess from '../Pages/paymentfinish/PaymentFinish';
 import Paycomponent from '../Pages/paymentfinish/Paycomponent';
 
 
