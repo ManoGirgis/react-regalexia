@@ -1,12 +1,33 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
 const PaymentFinish = () => {
     const location = useLocation();
-    const { orderId, order, errorCode } = location.state || {}; // Destructure state from location
+    const { orderId, order, errorCode } = location.state || {};
 
+    const queryString = window.location.search;
+
+    const urlParams = new URLSearchParams(queryString);
+
+    const [tokens, setTokens] = useState(urlParams.get('token'));
     console.log("Order ID:", orderId);
     console.log("Error Code:", errorCode);
+
+
+
+
+    const status = urlParams.get('status');
+    if (status === "success") {
+        const token = urlParams.get('token');
+        console.log('Token:', token);
+    } else if (status === "failure") {
+        const errorCode = urlParams.get('errorCode');
+        console.log('Error Code:', errorCode);
+    }
+
+    console.log('Status:', status);
+
+
 
     useEffect(() => {
         const updateOrderStatus = async (orderId, status = "completed") => {
@@ -54,11 +75,12 @@ const PaymentFinish = () => {
 
     return (
         <div>
-            <h1>Payment {errorCode ? "Failure" : "Success"}</h1>
+            <h1>Payment {tokens ? "Success" : "Failure"}</h1>
             {errorCode ? (
-                <p>There was an issue with your payment. Please try again.</p>
-            ) : (
                 <p>Your order has been completed successfully!</p>
+
+            ) : (
+                <p>There was an issue with your payment. Please try again.</p>
             )}
         </div>
     );

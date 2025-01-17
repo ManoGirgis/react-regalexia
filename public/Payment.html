@@ -26,7 +26,7 @@
       token: token,
       errorCode: errorCode,
     };
-    window.parent.postMessage(message, "*"); // Send message to React
+    window.parent.postMessage(message, "*");
     if (event.data === "payment-success") {
       parent.postMessage(
         { status: "success", token: document.getElementById("token").value },
@@ -42,7 +42,9 @@
       );
     }
 
-    window.location.href = `/payment-done?status=${paymentStatus}&token=${token}&errorCode=${errorCode}`;
+    //window.location.href = `/payment-done?status=${paymentStatus}&token=${token}&errorCode=${errorCode}`;
+    window.parent.postMessage(window.location.href, `/payment-done?status=${paymentStatus}&token=${token}&errorCode=${errorCode}`);
+
   });
 
   function pedido() {
