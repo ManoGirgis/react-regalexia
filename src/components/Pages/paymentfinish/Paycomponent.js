@@ -1,24 +1,30 @@
 import React, { useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 
 const Paycomponent = () => {
+    const location = useLocation();
+
     const handlePaymentMessage = (event) => {
+
         const trustedOrigins = [
             "http://localhost:3000"
         ];
+        const { orderId } = location.state || {};
+        const { status, token, errorCode } = event.data;
 
         if (!trustedOrigins.includes(event.origin)) {
             console.warn("Invalid message origin:", event.origin);
             return;
         }
 
-        const { status, token, errorCode } = event.data;
+
         console.log("Payment Status:", status, "Token:", token, "Error Code:", errorCode);
 
         if (status === "success") {
-            window.location.href = `/payment-done?status=success&token=${token}`;
-            
+            window.location.href = `/payment-done?status=success&token=${token}&orderId=${orderId}`;
+
         } else if (status === "failure") {
-            window.location.href = `/payment-done?status=failure&errorCode=${errorCode}`;
+            window.location.href = `/payment-done?status=failure&errorCode=${errorCode}&orderId=${orderId}`;
         }
     };
 

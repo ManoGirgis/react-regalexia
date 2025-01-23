@@ -44,7 +44,8 @@ const checkoutOrder = async (cart, navigate) => {
     const order = await orderResponse.json();
     console.log("Order created successfully:", order);
 
-    navigate("/redsys", { state: { orderId: order.id, order } });
+    navigate(`/redsys`, { state: { orderId: order.id, order } });
+    console.log("Order id: ", order.id);
   } catch (error) {
     console.error("Error during checkout:", error);
   }

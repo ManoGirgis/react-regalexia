@@ -6,8 +6,30 @@
 <script src="https://sis-t.redsys.es:25443/sis/NC/sandbox/redsysV3.js"></script>
 <script>
   function merchantValidationEjemplo() {
-    // Insertar validaciones propias
-    alert("Esto son validaciones propias");
+    // const cardNumber = document.getElementById("card-number").value;
+    // const expiryDate = document.getElementById("card-expiration").value;
+    // const cvv = document.getElementById("card-cvv").value;
+
+    // if (!cardNumber || !expiryDate || !cvv) {
+    //   alert("Please fill in all the required fields.");
+    //   return false;
+    // }
+
+    // if (cardNumber.length < 16) {
+    //   alert("Card number must be at least 16 digits.");
+    //   return false;
+    // }
+
+    // // if (cvv.length < 3) {
+    // //   alert("CVV must be at least 3 digits.");
+    // //   return false;
+    // // }
+    // // alert("Esto son validaciones propias");
+    // if (errorCode) {
+    //   console.log("Error code: " + errorCode);
+    //   alert("Error code: " + errorCode);
+    //   return false;
+    // }
     return true;
   }
 
@@ -43,8 +65,10 @@
     }
 
     //window.location.href = `/payment-done?status=${paymentStatus}&token=${token}&errorCode=${errorCode}`;
-    window.parent.postMessage(window.location.href, `/payment-done?status=${paymentStatus}&token=${token}&errorCode=${errorCode}`);
-
+    window.parent.postMessage(
+      window.location.href,
+      `/payment-done?status=${paymentStatus}&token=${token}&errorCode=${errorCode}`
+    );
   });
 
   function pedido() {

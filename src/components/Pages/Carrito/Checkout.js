@@ -16,7 +16,7 @@ const Checkout = () => {
 
   const handleCheckout = () => {
     if (cart.length > 0) {
-      checkoutOrder(cart, navigate); 
+      checkoutOrder(cart, navigate);
     } else {
       console.error("Cart is empty. Cannot proceed with checkout.");
     }
