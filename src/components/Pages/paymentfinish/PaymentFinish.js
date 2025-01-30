@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import useOrderUpdate from "./fetchings/useOrderUpdate";
+import { Button } from "antd";
 
-const PaymentFinish = () => {
+const PaymentFinish = (navigate) => {
     const location = useLocation();
     const { updateOrderStatus, responseData, error, loading } = useOrderUpdate();
 
@@ -16,6 +17,7 @@ const PaymentFinish = () => {
 
     console.log("PaymentFinish -> tokens", tokens)
     console.log("PaymentFinish -> status", status)
+    console.log("PaymentFinish -> errorCode", errorCode)
 
     console.log("PaymentFinish -> orderId", orderId)
 
@@ -45,13 +47,21 @@ const PaymentFinish = () => {
         return <p style={{ color: "red" }}>Error: {error}</p>;
     }
 
+    const handleRetry = () => {
+        navigate(`/redsys`, { state: { orderId } });
+    };
+
     return (
         <div>
             <h1>Payment {status === "success" ? "Success" : "Failure"}</h1>
             {status === "success" && !errorCode ? (
                 <p>Your order has been completed successfully!</p>
             ) : (
-                <p>There was an issue with your payment. Please try again.</p>
+                <>
+                    <p>There was an issue with your payment. Please try again.</p>
+                    <Button type="primary" onClick={handleRetry}>Retry</Button>
+                    <Button type="primary" onClick={() => window.location.href = "/"}>Go back to home</Button>
+                </>
             )}
         </div>
     );

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
-const Paycomponent = () => {
+const Paycomponent = (navigate) => {
     const location = useLocation();
 
     const handlePaymentMessage = (event) => {
